@@ -52,5 +52,11 @@
    	</div>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$(".nav .links").addClass("active");
+    	});
+    </script>
   </body>
 </html>

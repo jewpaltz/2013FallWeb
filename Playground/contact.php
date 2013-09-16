@@ -15,7 +15,7 @@
   	<? include('_nav.php'); ?>
   	<div class="container">
   		<div class="well">
-		    <h1><?=$msg?></h1>
+		    <h1>Hello World</h1>
 		    <p>Welcome class of 2013 to Web Server Programming <a class="btn btn-default">Learn More</a></p>
   			
   		</div>
@@ -47,5 +47,20 @@
    	</div>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="Scripts/main.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$(".nav .contact").addClass("active");
+    	});
+    </script>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
