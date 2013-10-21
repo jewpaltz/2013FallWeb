@@ -3,6 +3,8 @@
 	
 	<h2>Users</h2>
 	
+	<a href="?action=new">Add Contact</a>
+	
 	<table class="table table-hover table-bordered table-striped">
 		<thead>
 		<tr>
