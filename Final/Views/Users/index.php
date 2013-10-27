@@ -2,6 +2,7 @@
 include_once '../../inc/_global.php';
 
 @$action = $_REQUEST['action'];
+@$format = $_REQUEST['format'];
 
 switch ($action) {
 	case 'details':
@@ -10,23 +11,26 @@ switch ($action) {
 		break;
 		
 	case 'new':
-		$view 	= 'new.php';		
+		$model = Users::Blank();
+		$view 	= 'edit.php';		
 		break;
 	
 	case 'save':
-		$errors = Users::Save($_REQUEST);
-		if($errors){
-			$model = $_REQUEST;
-			$view = 'new.php';
-		}else{
-			header("Location: ?");
-			die();			
+		$errors = Users::Validate($_REQUEST);
+		if(!$errors){
+			$errors = Users::Save($_REQUEST);			
 		}
+		if(!$errors){
+			header("Location: ?");
+			die();
+		}			
+			$model = $_REQUEST;
+			$view = 'edit.php';
 		break;
 		
 	case 'edit':
 		$model  = Users::Get($_REQUEST['id']);
-		$view 	= 'details.php';		
+		$view 	= 'edit.php';		
 		break;
 		
 	case 'delete':
@@ -40,5 +44,16 @@ switch ($action) {
 		break;
 }
 
-
-include '../Shared/_Layout.php';
+switch ($format) {
+	case 'min':
+		include $view;
+		break;
+	case 'dialog':
+		include '../Shared/_Dialog.php';
+		break;
+	
+	default:
+		include '../Shared/_Layout.php';
+		
+		break;
+}
