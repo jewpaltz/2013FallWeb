@@ -2,7 +2,6 @@
 include_once '../../inc/_global.php';
 
 @$action = $_REQUEST['action'];
-@$format = $_REQUEST['format'];
 
 switch ($action) {
 	case 'details':
@@ -44,16 +43,5 @@ switch ($action) {
 		break;
 }
 
-switch ($format) {
-	case 'min':
-		include $view;
-		break;
-	case 'dialog':
-		include '../Shared/_Dialog.php';
-		break;
-	
-	default:
 		include '../Shared/_Layout.php';
-		
-		break;
-}
+
