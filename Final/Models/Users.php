@@ -44,6 +44,23 @@ class Users {
 		}
 	}
 	
+	static public function Delete($id)
+	{
+		$conn = GetConnection();
+		$sql =	" DELETE From 2013Fall_Users WHERE id=$id ";
+				
+		$conn->query($sql);
+		//echo $sql; 
+		$error = $conn->error;		
+		$conn->close();
+		//$error = "dd";
+		if($error){
+			return array('db_error' => $error);
+		}else {
+			return false;
+		}		
+	}
+	
 	static public function Validate($row)
 	{
 		$errors = array();
