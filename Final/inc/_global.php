@@ -16,10 +16,12 @@ function fetch_all($sql)
 	$ret = array();
 	$conn = GetConnection();
 	$result = $conn->query($sql);
+	echo $conn->error;
 	
 	while ($rs = $result->fetch_assoc()) {
 		$ret[] = $rs;
 	}
+	
 	
 	$conn->close();
 	return $ret;
