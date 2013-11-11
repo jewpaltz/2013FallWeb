@@ -61,6 +61,10 @@ switch ($format) {
 	case 'dialog':
 		include '../Shared/_DialogLayout.php';				
 		break;
+		
+	case 'plain':
+		include $view;
+		break;
 	
 	default:
 		include '../Shared/_Layout.php';		
