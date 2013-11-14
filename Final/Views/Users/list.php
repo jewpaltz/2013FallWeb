@@ -32,16 +32,7 @@
 		</thead>
 		<tbody>
 		<? foreach ($model as $rs): ?>
-			<tr class=" <?= $rs['id']==$_REQUEST['id'] ? 'success' : '' ?> ">
-				<td><?=$rs['FirstName']?></td>
-				<td><?=$rs['LastName']?></td>
-				<td><?=$rs['UserType_Name']?></td>
-				<td>
-					<a class="glyphicon glyphicon-file" href="?action=details&id=<?=$rs['id']?>" ></a>
-					<a class="glyphicon glyphicon-pencil" href="?action=edit&id=<?=$rs['id']?>" ></a>
-					<a class="glyphicon glyphicon-trash" href="?action=delete&id=<?=$rs['id']?>" ></a>
-				</td>
-			</tr>
+			<? include 'item.php'; ?>
 		<? endforeach ?>
 		</tbody>
 	</table>
@@ -57,6 +48,7 @@
 </div>
   <? function Scripts(){ ?>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
 		$(".table").dataTable();
@@ -89,7 +81,16 @@
 		});
 		
 		var HandleSubmit = function (){
-			$("#details").html(JSON.stringify($(this).serializeArray()));
+			var data = $(this).serializeArray();
+			data.push({name:'format', value:'plain'});
+			$.post(this.action, data, function(results){
+				if($(results).find("form").length){
+					$("#details").html(results);					
+				}else{
+					$(".success2").html($(results).html())
+				}
+			});
+			
 			return false;
 		}
 	})
