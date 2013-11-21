@@ -42,27 +42,20 @@
 </div>
 
 <script id="row-template" type="text/x-handlebars-template">
-				<td>{{FirstName}}</td>
-				<td>{{LastName}}</td>
-				<td>{{UserType_Name}}</td>
-				<td>
-					<a class="glyphicon glyphicon-file" href="?action=details&id={{id}}" ></a>
-					<a class="glyphicon glyphicon-pencil" href="?action=edit&id={{id}}" ></a>
-					<a class="glyphicon glyphicon-trash" href="?action=delete&id={{id}}" ></a>
-				</td>
+		<td>{{FirstName}}</td>
+		<td>{{LastName}}</td>
+		<td>{{UserType_Name}}</td>
+		<td>
+			<a class="glyphicon glyphicon-file" href="?action=details&id={{id}}" ></a>
+			<a class="glyphicon glyphicon-pencil" href="?action=edit&id={{id}}" ></a>
+			<a class="glyphicon glyphicon-trash" href="?action=delete&id={{id}}" ></a>
+		</td>
 </script>
 
 <script id="tbody-template" type="text/x-handlebars-template">
 	{{#each .}}
 		<tr>
-				<td>{{FirstName}}</td>
-				<td>{{LastName}}</td>
-				<td>{{UserType_Name}}</td>
-				<td>
-					<a class="glyphicon glyphicon-file" href="?action=details&id={{id}}" ></a>
-					<a class="glyphicon glyphicon-pencil" href="?action=edit&id={{id}}" ></a>
-					<a class="glyphicon glyphicon-trash" href="?action=delete&id={{id}}" ></a>
-				</td>
+			{{> row-template}}
 		</tr>
 	{{/each}}
 </script>
@@ -75,16 +68,19 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
-			var tableTemplate = Handlebars.compile($("#tbody-template").html());					
-			$(".table tbody").html(tableTemplate(<?=json_encode($model);?>))	
+		var templateRow = Handlebars.compile($("#row-template").html());
+		Handlebars.registerPartial("row-template", templateRow);				
+		var tableTemplate = Handlebars.compile($("#tbody-template").html());
+							
+		$(".table tbody").html(tableTemplate(<?=json_encode($model);?>))	
 		
 		$(".table").dataTable();
+		
 		$(".alert .close").click(function(){
 			$(this).closest(".alert").slideUp();
 		});
 		
 		$(".table a").click(function(){
-			
 			
 			if($(this).closest("tr").hasClass("success2")){
 				$(".success2").removeClass("success2");
@@ -111,8 +107,7 @@
 				if(results.errors){
 					$("#details").html(results);					
 				}else{
-					var template = Handlebars.compile($("#row-template").html());					
-					$(".success2").html(template(results.model));
+					$(".success2").html(templateRow(results.model));
 				}
 				
 			}, 'json');
