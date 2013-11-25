@@ -60,10 +60,8 @@
 				          <li><a href="#">Action</a></li>
 				        </ul>
 					</li>
-				<p class="navbar-text pull-right">
-					<span class="glyphicon glyphicon-shopping-cart"></span>
+				<p class="navbar-text pull-right" id="shopping-cart">
 					<a href="#" class="navbar-link">Cart</a>
-					<span class="badge">0</span>
 				</p>
 			</div>
 		</div>
