@@ -5,6 +5,24 @@
 		margin: 5px;
 		float: left;
 	}
+	#shopping-cart-list {
+		position: fixed;
+		right: 	0px;
+		top: 	20%;
+		bottom: 20%;
+		height: 60%;
+		width: 	200px;
+		overflow-y: scroll;
+		background: #FFFFFF;
+		border-radius: 5px 0px 0px 5px;
+		border: 1px solid #000;
+		padding: 5px;
+	}
+	#shopping-cart-list img {
+		float: left;
+		width: 30px;
+		height: 30px;
+	}
 </style>
 <div class="container">
 	<div id="category-list">
@@ -21,6 +39,7 @@
 				<img alt="item image" data-bind="attr: {src: Picture_Url}" />
 				<h4 data-bind="text: Name"></h4>
 				<p data-bind="text: Description"></p>
+				$<span data-bind="text: Price"></span>
 				<button class="btn btn-success pull-right" data-bind="click: $root.addToCart">
 					<span class="glyphicon glyphicon-shopping-cart"></span>
 					Add To Cart
@@ -28,6 +47,24 @@
 			</div>
 		</div>
 	</div>
+	<div id="shopping-cart-list" data-bind="display: cart().length > 0">
+		<div  data-bind="foreach: cart" >
+			<div class="well well-sm clearfix">
+				<img alt="item image" data-bind="attr: {src: Picture_Url}" />
+				<h6 data-bind="text: Name"></h6>
+				<p data-bind="text: Description"></p>
+				$<span data-bind="text: Price"></span>
+				<button class="btn btn-warning btn-sm pull-right" data-bind="click: $root.addToCart">
+					<span class="glyphicon glyphicon-shopping-del"></span>
+					Remove
+				</button>
+			</div>
+		</div>
+		<div>
+			Total: $ <span data-bind="text: cartTotal"></span>
+		</div>
+	</div>
+	
 </div>
 
 <script type="text/html" id="shopping-cart-template">
@@ -50,7 +87,7 @@
 			currentCategory: ko.observable(),
 			itemList: ko.observableArray(),
 			cart: ko.observableArray(),
-			
+						
 			selectCategory: function(){
 				vm.currentCategory(this);
 				$.get("?action=list&format=json",{CategoryId:this.id},null,'json')
@@ -62,6 +99,13 @@
 				vm.cart.push(this);
 			}
 		}
+		vm.cartTotal = ko.computed(function(){
+				var tot = 0;
+				$.each(vm.cart(), function(i,x){
+					tot += +x.Price;
+				})
+				return tot;
+		});
 		ko.applyBindings(vm);
 		$("#shopping-cart").html($("#shopping-cart-template").html())
 		ko.applyBindings(vm, $("#shopping-cart")[0]);

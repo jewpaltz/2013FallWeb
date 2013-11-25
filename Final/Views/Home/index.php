@@ -63,7 +63,8 @@ switch ($action) {
 		break;
 
 	case 'list':
-		$model  = Products::Get();
+		@$CategoryId = $_REQUEST['CategoryId'];
+		$model  = Products::GetItemsInCategory($CategoryId);
 		$view 	= 'list.php';
 		break;
 		
