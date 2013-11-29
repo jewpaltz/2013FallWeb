@@ -12,11 +12,20 @@
 		bottom: 20%;
 		height: 60%;
 		width: 	200px;
-		overflow-y: scroll;
 		background: #FFFFFF;
 		border-radius: 5px 0px 0px 5px;
 		border: 1px solid #000;
 		padding: 5px;
+		transition: right .5s;
+		-webkit-transition: right .5s;
+	}
+	.closed#shopping-cart-list {
+		right: -180px;
+	}
+	#shopping-cart-list .scrolling {
+		overflow-y: scroll;
+		height: 95%;
+		border-bottom: 1px solid black;
 	}
 	#shopping-cart-list img {
 		float: left;
@@ -47,14 +56,14 @@
 			</div>
 		</div>
 	</div>
-	<div id="shopping-cart-list" data-bind="display: cart().length > 0">
-		<div  data-bind="foreach: cart" >
+	<div id="shopping-cart-list" class="closed" >
+		<div class="scrolling"  data-bind="foreach: cart" >
 			<div class="well well-sm clearfix">
 				<img alt="item image" data-bind="attr: {src: Picture_Url}" />
 				<h6 data-bind="text: Name"></h6>
 				<p data-bind="text: Description"></p>
 				$<span data-bind="text: Price"></span>
-				<button class="btn btn-warning btn-sm pull-right" data-bind="click: $root.addToCart">
+				<button class="btn btn-warning btn-sm pull-right" data-bind="click: $root.removeFromCart">
 					<span class="glyphicon glyphicon-shopping-del"></span>
 					Remove
 				</button>
@@ -69,7 +78,7 @@
 
 <script type="text/html" id="shopping-cart-template">
 	<span class="glyphicon glyphicon-shopping-cart"></span>
-	<a href="#" class="navbar-link">Cart</a>
+	<a href="#" class="navbar-link" data-bind="click: toggleCartList">Cart</a>
 	<span class="badge" data-bind="text: cart().length"></span>
 </script>
 <? function Scripts(){ ?>
@@ -97,6 +106,12 @@
 			},
 			addToCart: function(){
 				vm.cart.push(this);
+			},
+			removeFromCart: function(){
+				vm.cart.remove(this);
+			},
+			toggleCartList: function(){
+				$("#shopping-cart-list").toggleClass("closed");
 			}
 		}
 		vm.cartTotal = ko.computed(function(){

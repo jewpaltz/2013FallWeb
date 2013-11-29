@@ -4,7 +4,7 @@
  * 
  */
 class Products {
-	
+	/* Wow, that is quite an online editor */
 	static public function Get()
 	{
 		return fetch_all('SELECT * FROM 2013Fall_Products');
